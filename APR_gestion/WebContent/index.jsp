@@ -5,7 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<jsp:include page="WEB-INF/Vistas/header.jsp" />
+<jsp:include page="WEB-INF/Vistas/head.jsp" />
 </head>
 <body>
 
@@ -18,7 +18,7 @@
         </header>
         <form action="Vistas/Home/home.jsp" class="panel-body wrapper-lg col-md-12">
           <div class="form-group">
-              <label class="control-label">Correo</label>
+              <label class="control-label">Correo</label> <span id="emailok"></span>
               <input type="email" id="email" placeholder="test@example.com" class="form-control input-lg">
           </div>
           <div class="form-group">
@@ -50,8 +50,21 @@
     </div>
   </footer>
   
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script type="text/javascript">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+   <script type="text/javascript">
+    
+    document.getElementById('email').addEventListener('input', function() {
+        campo = event.target;
+        valido = document.getElementById('emailok');
+            
+        emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        //Se muestra un texto a modo de ejemplo, luego va a ser un icono
+        if (emailRegex.test(campo.value)) {
+          valido.innerHTML = '<i class="fas fa-check-circle" style="color: #66bd78;"></i>';
+        }else{
+        	valido.innerHTML = '';
+        }
+    });
 
         function login() {
 
@@ -96,9 +109,6 @@
                     
                 }.bind(this));
         }
-
-
-
 
     </script>
   

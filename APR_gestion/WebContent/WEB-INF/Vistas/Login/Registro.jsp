@@ -5,7 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Registro APR</title>
-<jsp:include page="/WEB-INF/Vistas/header.jsp" />
+<jsp:include page="/WEB-INF/Vistas/head.jsp" />
 </head>
 <body>
 
@@ -95,7 +95,7 @@
   </footer>
   
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script type="text/javascript">
+   <script type="text/javascript">
     
     document.getElementById('correo').addEventListener('input', function() {
         campo = event.target;
