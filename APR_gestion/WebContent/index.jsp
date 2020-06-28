@@ -5,7 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<jsp:include page="Vistas/header.jsp" />
+<jsp:include page="WEB-INF/Vistas/header.jsp" />
 </head>
 <body>
 
@@ -35,7 +35,7 @@
           <button type="button" class="btn btn-success btn-block" onclick="login()">Ingresar</button>
 			<br><br><br>
           <p class="text-muted text-center"><small>¿No sabes como gestionar tu APR?</small></p>
-          <a href="signup.html" class="btn btn-default btn-block">Crea una cuenta</a>
+          <a href="Registro" class="btn btn-default btn-block">Crea una cuenta</a>
         </form>
         
       </section>
@@ -81,9 +81,10 @@
             }).then(res => res.json())
                 .catch(error => console.error('Error:', error))
                 .then(function (response) {
-
+					
+                	
                     if (response.acceso == true) {
-                        window.location.href = "../Home";
+                        window.location.href = "Home";
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -92,6 +93,7 @@
                             footer: '<a href>Registrarse</a> <p></p> <a href>Olvide mi contraseña</a>'
                         });
                     }
+                    
                 }.bind(this));
         }
 
