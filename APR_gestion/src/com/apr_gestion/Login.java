@@ -16,7 +16,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
-
 /**
  * Servlet implementation class Login
  */
@@ -43,32 +42,19 @@ public class Login extends HttpServlet {
 				String json = "";
 				if(br != null){
 					json = br.readLine();
-					System.out.println(json);
+					// System.out.println(json);
 				}
 				
+				JSONObject data= new JSONObject();
 				
 				JSONParser parser = new JSONParser();
-                Object resultObject;
 				try {
-					resultObject = parser.parse(json);
-					
-					if (resultObject instanceof JSONArray) {
-	                    JSONArray array=(JSONArray)resultObject;
-	                    for (Object object : array) {
-	                        JSONObject obj =(JSONObject)object;
-	                        System.out.println(obj.get("correo"));
-	                        System.out.println(obj.get("pass"));
-	                    }
-
-	                }else if (resultObject instanceof JSONObject) {
-	                    JSONObject obj =(JSONObject)resultObject;
-	                    System.out.println(obj.get("correo"));
-	                    System.out.println(obj.get("pass"));
-	                }
-					
-				} catch (ParseException e) {
+					data=(JSONObject) parser.parse(json);
+					System.out.println("correo "+data.get("correo"));
+                    System.out.println("password "+data.get("pass"));
+				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					e1.printStackTrace();
 				}
 
                 
