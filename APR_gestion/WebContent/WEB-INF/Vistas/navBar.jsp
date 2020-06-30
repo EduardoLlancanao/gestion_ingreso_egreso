@@ -57,17 +57,17 @@
 	                                 <i class="fa fa-angle-down text"></i>
 	                                 <i class="fa fa-angle-up text-active"></i>
 	                             </span>
-	                             <span>Administrar</span>
+	                             <span>Agregar</span>
 	                         </a>
 	                         <ul class="nav lt">
 	                             <li class="active">
-	                                 <a href="Home" class="active">
+	                                 <a href="Ingreso" class="active">
 	                                     <i class="fa fa-angle-right"></i>
 	                                     <span>Ingresos</span>
 	                                 </a>
 	                             </li>
 	                             <li>
-	                                 <a href="Home">
+	                                 <a href="Egreso">
 	                                     <i class="fa fa-angle-right"></i>
 	                                     <span>Egresos</span>
 	                                 </a>
