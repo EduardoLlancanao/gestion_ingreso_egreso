@@ -35,7 +35,7 @@
 	                         </a>
 	                         <ul class="nav lt">
 	                             <li class="active">
-	                                 <a href="Home" class="active">
+	                                 <a href="Cuenta" class="active">
 	                                     <i class="fa fa-angle-right"></i>
 	                                     <span>Gestionar Cuentas</span>
 	                                 </a>
