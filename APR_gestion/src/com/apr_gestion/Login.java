@@ -15,6 +15,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.apr_gestion.model.MainDB;
+
 
 /**
  * Servlet implementation class Login
@@ -54,12 +56,17 @@ public class Login extends HttpServlet {
 					data=(JSONObject) parser.parse(json);
 					System.out.println("correo "+data.get("correo"));
                     System.out.println("password "+data.get("pass"));
+                    
+                    MainDB mb = new MainDB();
+                    
+                    pedido = true;
+                    
+                    // pedido = mb.User_Acceso(data.get("correo").toString(), data.get("pass").toString());
                                         
                     response.setContentType("application/json");
             		response.setHeader("Cache-Control", "nocache");
             		response.setCharacterEncoding("utf-8");
                     	
-            		pedido = true;
             		res.put("acceso", pedido);
                     PrintWriter out = response.getWriter();
             		out.print(res);
