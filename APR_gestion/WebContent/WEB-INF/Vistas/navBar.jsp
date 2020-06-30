@@ -48,6 +48,32 @@
 	                             </li>
 	                         </ul>
 	                     </li>
+	                      <li class="active">
+	                         <a href="#layout" class="active">
+	                             <i class="fa fa-dashboard icon">
+	                                 <b class="bg-danger"></b>
+	                             </i>
+	                             <span class="pull-right">
+	                                 <i class="fa fa-angle-down text"></i>
+	                                 <i class="fa fa-angle-up text-active"></i>
+	                             </span>
+	                             <span>Administrar</span>
+	                         </a>
+	                         <ul class="nav lt">
+	                             <li class="active">
+	                                 <a href="Home" class="active">
+	                                     <i class="fa fa-angle-right"></i>
+	                                     <span>Ingresos</span>
+	                                 </a>
+	                             </li>
+	                             <li>
+	                                 <a href="Home">
+	                                     <i class="fa fa-angle-right"></i>
+	                                     <span>Egresos</span>
+	                                 </a>
+	                             </li>
+	                         </ul>
+	                     </li>
 	                     <li>
 	                         <a href="#layout">
 	                             <i class="fa fa-columns icon">
