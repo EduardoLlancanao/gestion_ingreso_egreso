@@ -7,7 +7,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Nector/Desktop/mysql-connector-java-5.1.49.zip">
+	<classpathentry kind="lib" path="C:/Users/ERPyme/Downloads/mysql-connector-java-5.1.49.zip">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

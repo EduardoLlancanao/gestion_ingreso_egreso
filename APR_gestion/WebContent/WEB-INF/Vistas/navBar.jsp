@@ -22,36 +22,11 @@
 	             <!-- nav -->
 	             <nav class="nav-primary hidden-md">
 	                 <ul class="nav">
-	                     <li class="active">
+	                 
+	                 	<li class="active">
 	                         <a href="#layout" class="active">
 	                             <i class="fa fa-dashboard icon">
-	                                 <b class="bg-danger"></b>
-	                             </i>
-	                             <span class="pull-right">
-	                                 <i class="fa fa-angle-down text"></i>
-	                                 <i class="fa fa-angle-up text-active"></i>
-	                             </span>
-	                             <span>Cuentas</span>
-	                         </a>
-	                         <ul class="nav lt">
-	                             <li class="active">
-	                                 <a href="Cuenta" class="active">
-	                                     <i class="fa fa-angle-right"></i>
-	                                     <span>Gestionar Cuentas</span>
-	                                 </a>
-	                             </li>
-	                             <li>
-	                                 <a href="Home">
-	                                     <i class="fa fa-angle-right"></i>
-	                                     <span>Resumen</span>
-	                                 </a>
-	                             </li>
-	                         </ul>
-	                     </li>
-	                      <li class="active">
-	                         <a href="#layout" class="active">
-	                             <i class="fa fa-dashboard icon">
-	                                 <b class="bg-danger"></b>
+	                                 <b class="bg-info"></b>
 	                             </i>
 	                             <span class="pull-right">
 	                                 <i class="fa fa-angle-down text"></i>
@@ -74,6 +49,39 @@
 	                             </li>
 	                         </ul>
 	                     </li>
+	                 
+	                 
+	                 
+	                 
+	                 
+	                     <li class="active">
+	                         <a href="#layout">
+	                             <i class="fa fa-dashboard icon">
+	                                 <b class="bg-info"></b>
+	                             </i>
+	                             <span class="pull-right">
+	                                 <i class="fa fa-angle-down text"></i>
+	                                 <i class="fa fa-angle-up text-active"></i>
+	                             </span>
+	                             <span>Cuentas</span>
+	                         </a>
+	                         <ul class="nav lt">
+	                         	<li>
+	                                 <a href="Home">
+	                                     <i class="fa fa-angle-right"></i>
+	                                     <span>Resumen</span>
+	                                 </a>
+	                             </li>
+	                             <li class="active">
+	                                 <a href="Cuenta" class="active">
+	                                     <i class="fa fa-angle-right"></i>
+	                                     <span>Cuentas y Categorias</span>
+	                                 </a>
+	                             </li>
+	                             
+	                         </ul>
+	                     </li>
+	                      
 	                     <li>
 	                         <a href="#layout">
 	                             <i class="fa fa-columns icon">
@@ -89,12 +97,20 @@
 	                             <li>
 	                                 <a href="Home">
 	                                     <i class="fa fa-angle-right"></i>
-	                                     <span>Ver</span>
+	                                     <span>Resumen</span>
+	                                 </a>
+	                             </li>
+	                             
+	                             <li>
+	                                 <a href="Home">
+	                                     <i class="fa fa-angle-right"></i>
+	                                     <span>Ver Informes</span>
 	                                 </a>
 	                             </li>
 	                           
 	                         </ul>
 	                     </li>
+	                     
 	                     <li>
 	                         <a href="#layout">
 	                             <i class="fa fa-columns icon">
@@ -104,13 +120,20 @@
 	                                 <i class="fa fa-angle-down text"></i>
 	                                 <i class="fa fa-angle-up text-active"></i>
 	                             </span>
-	                             <span>Perfil</span>
+	                             <span>Configuración</span>
 	                         </a>
 	                         <ul class="nav lt">
 	                             <li>
 	                                 <a href="Home">
 	                                     <i class="fa fa-angle-right"></i>
-	                                     <span>Visualizar Perfil</span>
+	                                     <span>Mi Perfil</span>
+	                                 </a>
+	                             </li>
+	                             
+	                             <li>
+	                                 <a href="Home">
+	                                     <i class="fa fa-angle-right"></i>
+	                                     <span>Usuarios</span>
 	                                 </a>
 	                             </li>
 	                            
@@ -124,38 +147,12 @@
 	     </section>
 	
        <footer class="footer lt hidden-xs b-t b-dark">
-           <div id="chat" class="dropup">
-               <section class="dropdown-menu on aside-md m-l-n">
-                   <section class="panel bg-white">
-                       <header class="panel-heading b-b b-light">Active chats</header>
-                       <div class="panel-body animated fadeInRight">
-                           <p class="text-sm">No active chats.</p>
-                           <p><a href="#" class="btn btn-sm btn-default">Start a chat</a></p>
-                       </div>
-                   </section>
-               </section>
-           </div>
-           <div id="invite" class="dropup">
-               <section class="dropdown-menu on aside-md m-l-n">
-                   <section class="panel bg-white">
-                       <header class="panel-heading b-b b-light">
-                           John <i class="fa fa-circle text-success"></i>
-                       </header>
-                       <div class="panel-body animated fadeInRight">
-                           <p class="text-sm">No contacts in your lists.</p>
-                           <p><a href="#" class="btn btn-sm btn-facebook"><i class="fa fa-fw fa-facebook"></i> Invite from Facebook</a></p>
-                       </div>
-                   </section>
-               </section>
-           </div>
+           
            <a href="#nav" data-toggle="class:nav-xs" class="pull-right btn btn-sm btn-dark btn-icon">
                <i class="fa fa-angle-left text"></i>
                <i class="fa fa-angle-right text-active"></i>
            </a>
-           <div class="btn-group hidden-nav-xs">
-               <button type="button" title="Chats" class="btn btn-icon btn-sm btn-dark" data-toggle="dropdown" data-target="#chat"><i class="fa fa-comment-o"></i></button>
-               <button type="button" title="Contacts" class="btn btn-icon btn-sm btn-dark" data-toggle="dropdown" data-target="#invite"><i class="fa fa-facebook"></i></button>
-           </div>
+           
        </footer>
    </section>
 </aside>
