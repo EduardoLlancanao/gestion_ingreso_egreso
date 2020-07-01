@@ -36,14 +36,14 @@
                                 <li class="active"> Dashboard </li>
                             </ul>									
 							<section class="panel panel-default">							
-								<div class="col-sm-6 col-md-6 padder-v b-r b-light">
+								<div class="col-sm-6 col-md-6 padder-v  b-light">
 									<span class="fa-stack fa-2x pull-left m-r-sm">
 										<i class="fa fa-circle fa-stack-2x text-info">
 										</i>
 										<i class="fa fa-check fa-stack-1x text-white">
 										</i>
 									</span>
-									<a class="clear" href="#">
+									<a class="clear" href="Ingreso">
 										<span class="h3 block m-t-xs">
 											<strong>
 												<font style="vertical-align: inherit;">
@@ -70,7 +70,7 @@
 										<i class="fa fa-times fa-stack-1x text-white">
 										</i>
 									</span>															
-									<a href="#">
+									<a href="Egreso">
 									<span class="h3 block m-t-xs">
 											<strong>
 											<font style="vertical-align: inherit;">
