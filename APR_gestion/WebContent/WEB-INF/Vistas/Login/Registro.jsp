@@ -258,14 +258,14 @@
                 .then(function (response) {
 					
                 	
-                    if (response.acceso == true) {
+                    if (response.estado == "success") {
                         window.location.href = "Home";
                     } else {
                         Swal.fire({
-                            icon: 'error',
+                            icon: response.estado,
                             title: 'Oops...',
-                            text: 'Datos incorrectos',
-                            footer: '<a href>Registrarse</a> <p></p> <a href>Olvide mi contraseña</a>'
+                            text: response.mensaje,
+                            footer: ''
                         });
                     }
                     
