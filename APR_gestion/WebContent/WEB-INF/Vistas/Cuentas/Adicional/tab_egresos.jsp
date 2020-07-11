@@ -162,14 +162,14 @@
                   <div class="col-md-6">
                        <div class="CRM-inputGroup CRM-m-t-20">
                           <label>Nombre Categoria: </label>
-                          <input type="text" v-model="lista_correos.DescListaC" class="form-group form-control ">
+                          <input type="text" class="form-group form-control ">
                       </div>
                   </div>
                                    
                   <div class="col-md-6">
                        <div class="CRM-inputGroup CRM-m-t-20">
                           <label>Estado  : </label>
-                          <select class="form-group form-control " v-model="lista_correos.EstadoListaC">
+                          <select class="form-group form-control ">
                             <option value="A">Activo</option>
                             <option value="I">Inactivo</option>
                           </select>

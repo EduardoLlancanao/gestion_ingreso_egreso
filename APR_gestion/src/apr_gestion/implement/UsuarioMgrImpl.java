@@ -1,6 +1,5 @@
 package apr_gestion.implement;
 
-
 import com.apr_gestion.model.UsuarioDAOImpl;
 
 import apr_gestion.objetos.Usuario;
@@ -40,13 +39,14 @@ public class UsuarioMgrImpl implements UsuarioMgr {
 	}
 	
 	
-	public boolean user_Acceso(Usuario user) {
+	public Usuario user_Acceso(Usuario user) {
 		
 		UsuarioDAOImpl userDao = new UsuarioDAOImpl();
-		
-		boolean acceso = userDao.user_acceso(user);
+		Usuario usuario = null;
+				
+		usuario = userDao.user_acceso(user);
 			
-		return acceso;
+		return usuario;
 		
 	}
 

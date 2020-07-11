@@ -24,7 +24,7 @@
                 <span class="thumb-sm avatar pull-left">
                     <img src="https://www.vippng.com/png/detail/355-3554387_create-digital-profile-icon-blue-profile-icon-png.png">
                 </span>
-                Nombre del Usuario <b class="caret"></b>
+                <%= session.getAttribute("usuario") %> <b class="caret"></b>
             </a>
             
             <ul class="dropdown-menu animated fadeInRight">

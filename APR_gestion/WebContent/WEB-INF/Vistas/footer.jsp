@@ -1,6 +1,5 @@
 <script src="js/jquery/dist/jquery.js"></script>
 <script src="js/bootstrap/dist/js/bootstrap.js"></script>
-<script src="js/site.js"></script>
 <script src="js/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="js/bootstrap.js"></script>
@@ -20,3 +19,7 @@
 
 <script src="js/sortable/jquery.sortable.js"></script>
 <script src="js/app.plugin.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script src="js/site.js"></script>

@@ -18,7 +18,7 @@
     	
     	<!-- Fin Header -->
 
-        <section>
+        <section id="app">
                 
             <section class="hbox stretch">
             
@@ -53,7 +53,8 @@
                                             </span>
 
                                             <span class="h4 block m-t-xs">
-                                                <strong>1</strong>
+                                                <strong v-if="user_cuentas.count > 0 ">{{user_cuentas.count}}</strong>
+                                                <strong v-else>0</strong>
                                                 <small class="text-muted text-uc" style="font-size: 11px;">Gestionar Cuentas</small>
                                             </span>
 
@@ -135,6 +136,208 @@
 	</section>
         
     <jsp:include page="../../Vistas/footer.jsp" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    
+    <script type="text/javascript">
+    
+    var app = new Vue({
+    	  el: '#app',
+    	  data: {
+    	    new_cuenta:{
+    	    	cuenta_id:0,
+    	    	cuenta_nombre:'',
+    	    	cuenta_tipo:'Individual',
+    	    	cuenta_corresponde:'Credito',
+    	    	cuenta_numero :'',
+    	    	cuenta_estado : 'Activo',
+    	    },
+    	    user_cuentas:[],
+    	  },
+    	  methods: {
+    		  
+    		  get_cuentas: function (){
+    			  
+    			  var url = 'Cuenta';
+  	            
+  	            fetch(url, {
+  	            	method: 'POST', // or 'PUT'
+  	                body: JSON.stringify({'url': "get"}), // data can be `string` or {object}!
+  	                headers: {
+  	                    'Content-Type': 'application/json'
+  	                }
+  	            }).then(res => res.json())
+  	                .catch(error => console.error('Error:', error))
+  	                .then(function (response) {
+  						
+  	                	
+  	                    if (response.data.length > 0) {
+  	                    	 	                    	
+  	                    	this.user_cuentas = response;
+  	                    	
+  	                    } 
+  	                    
+  	                    
+  	                    console.log(this.user_cuentas);
+  	                    
+  	                }.bind(this));
+    			  
+    		  },
+    		  
+    		   cargar_modal_cuenta: function(cuenta = null){
+    			       			   
+    			   if(cuenta != null){
+    				   
+    				   this.new_cuenta = cuenta;
+    				       				   
+    			   }else{
+    				   
+    				   this.new_cuenta.cuenta_id = 0;
+    				   
+    			   }
+    			   
+    			   console.log(this.new_cuenta);
+    			   
+    			   $('#exampleModal').modal('show');
+    			   
+    		  
+    	  		},
+    	  		
+    		    crear_cuenta: function () {
+    		    	
+    		    	if(this.new_cuenta.cuenta_nombre == ''){
+    		    		Swal.fire({
+    	                    icon: 'info',
+    	                    title: 'Oops...',
+    	                    text: 'Debe ingresar un nombre de cuenta',
+    	                    footer: ''
+    	                });
+    	                return;
+    		    		
+    		    	}
+    		    	
+    		    	var url = '';
+    		    	
+    		    	if(this.new_cuenta.cuenta_id == 0){
+    		    		url = 'create';
+    		    	}else if(this.new_cuenta.cuenta_id > 0){
+    		    		url = 'edit';
+    		    	}else{
+    		    		
+    		    		console.log(this.new_cuenta.cuenta_id);
+    		    		return;
+    		    	}
+    		    	
+    	            
+    	            fetch('Cuenta', {
+    	            	method: 'POST', // or 'PUT'
+    	                body: JSON.stringify({'url': url, 'data' : this.new_cuenta}), // data can be `string` or {object}!
+    	                headers: {
+    	                    'Content-Type': 'application/json'
+    	                }
+    	            }).then(res => res.json())
+    	                .catch(error => console.error('Error:', error))
+    	                .then(function (response) {
+    						
+    	                	
+    	                    if (response.estado == "success") {
+    	                    	
+    	                    	$('#exampleModal').modal('hide');
+    	                    	
+    	                    	Swal.fire({
+    	                            icon: response.estado,
+    	                            title: 'Oops...',
+    	                            text: response.mensaje,
+    	                            footer: ''
+    	                        });
+    	                        
+    	                        
+    	                    } else {
+    	                    	
+    	                        Swal.fire({
+    	                            icon: response.estado,
+    	                            title: 'Oops...',
+    	                            text: response.mensaje,
+    	                            footer: ''
+    	                        });
+    	                        
+    	                    }
+    	                    
+    	                    app.get_cuentas();
+    	                    
+    	                }.bind(this));
+    		      
+    		    },
+    		    
+				eliminar_cuenta: function () {
+					
+					
+					Swal.fire({
+						  title: '¿Estas Seguro De Eliminar Esta Cuenta?',
+						  text: "",
+						  icon: 'warning',
+						  showCancelButton: true,
+						  confirmButtonColor: '#3085d6',
+						  cancelButtonColor: '#d33',
+						  confirmButtonText: 'Si, Eliminarla!',
+						  cancelButtonText: 'No, No quiero Eliminarla!'
+						}).then((result) => {
+						  if (result.value) {
+							  
+							  var url = 'delete';   		    	
+			    	            
+			    	            fetch('Cuenta', {
+			    	            	method: 'POST', // or 'PUT'
+			    	                body: JSON.stringify({'url': url, 'data' : this.new_cuenta}), // data can be `string` or {object}!
+			    	                headers: {
+			    	                    'Content-Type': 'application/json'
+			    	                }
+			    	            }).then(res => res.json())
+			    	                .catch(error => console.error('Error:', error))
+			    	                .then(function (response) {
+			    						
+			    	                	
+			    	                    if (response.estado == "success") {
+			    	                    	
+			    	                    	$('#exampleModal').modal('hide');
+			    	                    	
+			    	                    	Swal.fire({
+			    	                            icon: response.estado,
+			    	                            title: 'Oops...',
+			    	                            text: response.mensaje,
+			    	                            footer: ''
+			    	                        });
+			    	                        
+			    	                        
+			    	                    } else {
+			    	                    	
+			    	                        Swal.fire({
+			    	                            icon: response.estado,
+			    	                            title: 'Oops...',
+			    	                            text: response.mensaje,
+			    	                            footer: ''
+			    	                        });
+			    	                        
+			    	                    }
+			    	                    
+			    	                    app.get_cuentas();
+			    	                    
+			    	                }.bind(this));
+  
+						    
+						  }
+						})
+					
+    		    }
+    		  }
+    	})
+    
+    
+    app.get_cuentas();
+    
+    
+    </script>
 
 </body>
 </html>
+

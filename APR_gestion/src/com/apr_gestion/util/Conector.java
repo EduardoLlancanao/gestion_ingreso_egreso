@@ -44,7 +44,7 @@ public class Conector {
 			// Al detectar error termina el flujo
 			System.exit(0);
 		}
-		System.out.println("No hemos conectado a la base de datos: "+ this.sServidor +"/ " + sBaseDatos);
+		System.out.println("Conectados a : "+ this.sServidor +"/ " + sBaseDatos);
 		return conexion;
 		
 	}

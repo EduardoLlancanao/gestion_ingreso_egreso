@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -62,8 +64,24 @@ public class Login extends HttpServlet {
 					
 					user.setUsu_correo(data.get("correo").toString());
 					user.setUsu_pass(data.get("pass").toString());
+					
+					Usuario usuario = null;
 
-                    pedido = mgr.user_Acceso(user);
+					usuario = mgr.user_Acceso(user);
+					
+					if(usuario != null) {
+						
+						pedido = true;
+						
+						HttpSession session = request.getSession();
+						session.setAttribute("usu_id", usuario.getUsu_id());
+				        session.setAttribute("usuario", usuario.getUsu_nombre()+' '+usuario.getUsu_apellido());
+				        
+//				        response.sendRedirect("/APR_gestion/Home");
+//				        RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/Vistas/Home/home.jsp");
+//						view.forward(request, response);
+						
+					}
                                         
                     response.setContentType("application/json");
             		response.setHeader("Cache-Control", "nocache");
