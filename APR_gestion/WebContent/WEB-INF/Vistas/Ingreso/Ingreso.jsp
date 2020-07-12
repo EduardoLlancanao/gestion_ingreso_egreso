@@ -18,7 +18,7 @@
     	
     	<!-- Fin Header -->
 
-        <section>
+        <section id="app">
                 
             <section class="hbox stretch">
             
@@ -41,23 +41,18 @@
 											<label>
 												Seleccione cuenta :
 											</label>
-											<select class="form-group form-control ">
-											<option value="A">Individual</option>
-											<option value="I">Comunitario</option>
+											<select class="form-group form-control" v-model="new_ingreso.id_cuenta">
+											<option v-for="item of user_cuentas.data" v-bind:value="item.cuenta_id">{{item.cuenta_nombre}}</option>
 											</select>
 										</div>												
 									</div>	
 									<div class="col-md-4">
 										<div class="CRM-inputGroup CRM-m-t-20">
 											<label>
-												Correspondiente a :
+												Categoria :
 											</label>
-											<select class="form-group form-control ">
-											<option value="transaccionales">Tarjeta de Credito</option>
-											<option value="transaccionales">Tarjeta de Debito</option>
-											<option value="Ahorro">Cuenta de ahorro</option>
-											<option value="transaccionales">Cuenta transaccionales</option>
-											<option value="Otros">Otros</option>
+											<select class="form-group form-control " v-model="new_ingreso.id_categoria">
+											<option v-for="item of ingresos.data" v-bind:value="item.id_categoria">{{item.categoria_nombre}}</option>
 											</select>
 										</div>												
 									</div>								
@@ -66,26 +61,37 @@
 									<div class="col-md-4">
 										<div class="CRM-inputGroup CRM-m-t-20">
 											<label>
-												Numero de cuenta :
+												Descripcion :
 											</label>
-											<input class="form-group form-control ">
+											<input class="form-group form-control " v-model="new_ingreso.movi_observacion">
 											</input>
 										</div>												
 									</div>	
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<div class="CRM-inputGroup CRM-m-t-20">
 											<label>
 												Monto :
 											</label>
-											<input class="form-group form-control " placeholder="$25.000">
+											<input class="form-group form-control " placeholder="$25.000" v-model="new_ingreso.movi_valor">
 											</input>
 										</div>												
-									</div>								
+									</div>
+									
+									<div class="col-md-2">
+										<div class="CRM-inputGroup CRM-m-t-20">
+											<label>
+												Fecha :
+											</label>
+											<input type="date" class="form-group form-control " v-model="new_ingreso.movi_fecha">
+											</input>
+										</div>												
+									</div>									
 	                            </section>
+	                            
 	                            <section class="col-md-12" >
 									<div class="col-md-12" style="text-align: center;" >
 										<div class="CRM-inputGroup CRM-m-t-20">
-											<button class="btn btn-s-md btn-primary btn-rounded">Agregar Ingreso</button>
+											<button class="btn btn-s-md btn-primary btn-rounded" @click="crear_movimiento()">Agregar Ingreso</button>
 										</div>												
 									</div>																
 	                            </section>   
@@ -206,6 +212,201 @@
 	</section>
         
     <jsp:include page="../../Vistas/footer.jsp" />
+    
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    
+    <script type="text/javascript">
+    
+    var app = new Vue({
+    	  el: '#app',
+    	  data: {
+    	    user_cuentas:[],
+    	    ingresos:[],
+    	    new_ingreso:{
+    	    	id_cuenta:0,
+    	    	id_categoria:0,
+    	    	movi_tipo:'Ingreso',
+    	    	movi_valor:0,
+    	    	movi_fecha:new Date(Date.now()).toISOString().split('T')[0],
+    	    	movi_observacion:'',
+    	    	
+    	    },
+    	  },
+    	  methods: {
+    		  
+    		  crear_movimiento: function () {
+  		    	
+  		    	if(this.new_ingreso.id_cuenta == 0){
+  		    		Swal.fire({
+  	                    icon: 'info',
+  	                    title: 'Oops...',
+  	                    text: 'Debe seleccionar una cuenta',
+  	                    footer: ''
+  	                });
+  	                return;
+  		    		
+  		    	}
+  		    	
+  		    	if(this.new_ingreso.id_categoria == 0){
+  		    		Swal.fire({
+  	                    icon: 'info',
+  	                    title: 'Oops...',
+  	                    text: 'Debe seleccionar una categoria',
+  	                    footer: ''
+  	                });
+  	                return;
+  		    		
+  		    	}
+  		    	
+  		    	if(this.new_ingreso.movi_valor == 0){
+  		    		Swal.fire({
+  	                    icon: 'info',
+  	                    title: 'Oops...',
+  	                    text: 'El monto debe ser mayor que 0',
+  	                    footer: ''
+  	                });
+  	                return;
+  		    		
+  		    	}
+  		    	
+  		    	if(this.new_ingreso.movi_observacion == ''){
+  		    		Swal.fire({
+  	                    icon: 'info',
+  	                    title: 'Oops...',
+  	                    text: 'La Observacion no puede ir vacía',
+  	                    footer: ''
+  	                });
+  	                return;
+  		    		
+  		    	}
+  		    	
+ 		    	 		    	
+  	            
+  	            fetch('Ingreso', {
+  	            	method: 'POST', // or 'PUT'
+  	                body: JSON.stringify({'url': 'create', 'data' : this.new_ingreso}), // data can be `string` or {object}!
+  	                headers: {
+  	                    'Content-Type': 'application/json'
+  	                }
+  	            }).then(res => res.json())
+  	               .catch(error => console.error('Error:', error))
+  	               .then(function (response) {
+  						
+  	                	
+  	                    if (response.estado == "success") {
+  	                    	  	                    	
+  	                    	Swal.fire({
+  	                            icon: response.estado,
+  	                            title: '',
+  	                            text: response.mensaje,
+  	                            footer: ''
+  	                        });
+  	                        
+  	                        
+  	                    } else {
+  	                    	
+  	                        Swal.fire({
+  	                            icon: response.estado,
+  	                            title: 'Oops...',
+  	                            text: response.mensaje,
+  	                            footer: ''
+  	                        });
+  	                        
+  	                    }
+  	                    
+  	                    app.get_cuentas();
+  	                    
+  	                }.bind(this));
+  		      
+  		    },
+    		  
+			get_cuentas: function (){
+    			  
+    			  var url = 'Cuenta';
+  	            
+  	            fetch(url, {
+  	            	method: 'POST', // or 'PUT'
+  	                body: JSON.stringify({'url': "get"}), // data can be `string` or {object}!
+  	                headers: {
+  	                    'Content-Type': 'application/json'
+  	                }
+  	            }).then(res => res.json())
+  	               .catch(error => console.error('Error:', error))
+  	               .then(function (response) {
+  						
+  	                	
+  	                    if (response.data.length > 0) {
+  	                    	 	                    	
+  	                    	this.user_cuentas = response;
+  	                    	
+  	                    } 
+  	                    
+  	                    
+  	                    console.log(this.user_cuentas);
+  	                    
+  	                }.bind(this));
+    			  
+    		  },
+    		  
+    		  get_egresos: function (){
+    			  
+      			  var url = 'Categoria';
+    	            
+    	            fetch(url, {
+    	            	method: 'POST', // or 'PUT'
+    	                body: JSON.stringify({'url': "get_egreso"}), // data can be `string` or {object}!
+    	                headers: {
+    	                    'Content-Type': 'application/json'
+    	                }
+    	            }).then(res => res.json())
+    	               .catch(error => console.error('Error:', error))
+    	               .then(function (response) {
+    	                	
+    	                	console.log(response);
+    						
+    	                    if (response.data.length > 0) {
+    	                    	 	                    	
+    	                    	this.egresos = response;
+    	                    	
+    	                    } 
+
+    	                }.bind(this));
+      			  
+      		  },
+      		  
+      		get_ingresos: function (){
+    			  
+    			  var url = 'Categoria';
+  	            
+  	            fetch(url, {
+  	            	method: 'POST', // or 'PUT'
+  	                body: JSON.stringify({'url': "get_ingreso"}), // data can be `string` or {object}!
+  	                headers: {
+  	                    'Content-Type': 'application/json'
+  	                }
+  	            }).then(res => res.json())
+  	               .catch(error => console.error('Error:', error))
+  	               .then(function (response) {
+  	                	
+  	                    if (response.data.length > 0) {
+  	                    	 	                    	
+  	                    	this.ingresos = response;
+  	                    	
+  	                    } 
+
+  	                }.bind(this));
+    			  
+    		  },
+    		  
+    		  
+    	  }
+    })
+    
+    app.get_cuentas();
+    app.get_ingresos();
+    app.get_egresos();
+    
+    </script>
 
 </body>
 </html>

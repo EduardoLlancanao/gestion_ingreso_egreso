@@ -149,10 +149,6 @@ public class CuentaDAOImpl implements CuentaDAO {
 			
 			listado = new JSONArray();
 			
-			JSONArray list = new JSONArray();
-			
-			int value = 0;
-				
 				while(resul.next()) {
 									
 //					System.out.println("Esta es weta : "+resul.getString("cuenta_nombre"));
@@ -166,15 +162,9 @@ public class CuentaDAOImpl implements CuentaDAO {
 					res.put("cuenta_estado" , resul.getString("cuenta_estado") );
 					
 					listado.add(res);
-										
-					value++;
+
 														
 				}
-				
-				
-//				list.add(0, listado);
-				
-				
 				
 				return listado;
 			

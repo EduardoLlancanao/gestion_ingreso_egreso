@@ -72,7 +72,8 @@
                                             </span>
 
                                             <span class="h4 block m-t-xs">
-                                                <strong id="bugs">2</strong>
+                                                <strong v-if="ingresos.count > 0 ">{{ingresos.count}}</strong>
+                                                <strong v-else>0</strong>
                                                 <small class="text-muted text-uc" style="font-size: 11px;">Gestionar Ingreso</small>
                                             </span>
 
@@ -91,7 +92,9 @@
                                               <span class="pos-abt" data-percent="100" data-line-width="4" data-track-Color="#fff" data-scale-Color="false" data-size="50" data-line-cap='butt' data-animate="3000" data-target="#firers" data-update="5000"></span>
                                             </span>
 
-                                            <span class="h4 block m-t-xs"><strong id="firers">5</strong>
+                                            <span class="h4 block m-t-xs">
+                                            	<strong v-if="egresos.count > 0 ">{{egresos.count}}</strong>
+                                                <strong v-else>0</strong>
                                               <small class="text-muted text-uc" style="font-size: 11px;">Gestionar Egreso</small>
                                             </span>
 
@@ -153,8 +156,18 @@
     	    	cuenta_estado : 'Activo',
     	    },
     	    user_cuentas:[],
+    	    categoria:{
+    	    	id_categoria:0,
+    	    	categoria_nombre:'',
+    	    	categoria_tipo:'Ingreso',
+    	    	categoria_estado:'Activo'
+    	    },
+    	    ingresos:[],
+    	    egresos:[],
     	  },
     	  methods: {
+    		  
+    		  // Metodos para Cuentas
     		  
     		  get_cuentas: function (){
     			  
@@ -167,8 +180,8 @@
   	                    'Content-Type': 'application/json'
   	                }
   	            }).then(res => res.json())
-  	                .catch(error => console.error('Error:', error))
-  	                .then(function (response) {
+  	               .catch(error => console.error('Error:', error))
+  	               .then(function (response) {
   						
   	                	
   	                    if (response.data.length > 0) {
@@ -236,8 +249,8 @@
     	                    'Content-Type': 'application/json'
     	                }
     	            }).then(res => res.json())
-    	                .catch(error => console.error('Error:', error))
-    	                .then(function (response) {
+    	               .catch(error => console.error('Error:', error))
+    	               .then(function (response) {
     						
     	                	
     	                    if (response.estado == "success") {
@@ -328,12 +341,221 @@
 						  }
 						})
 					
-    		    }
+    		    },
+    		    
+    		 // final Metodos para Cuentas
+    		    
+    		 
+    		 // Inicio metodos para Ingresos
+    		 
+    		    get_ingresos: function (){
+      			  
+	      			  var url = 'Categoria';
+	    	            
+	    	            fetch(url, {
+	    	            	method: 'POST', // or 'PUT'
+	    	                body: JSON.stringify({'url': "get_ingreso"}), // data can be `string` or {object}!
+	    	                headers: {
+	    	                    'Content-Type': 'application/json'
+	    	                }
+	    	            }).then(res => res.json())
+	    	               .catch(error => console.error('Error:', error))
+	    	               .then(function (response) {
+	    	                	
+	    	                    if (response.data.length > 0) {
+	    	                    	 	                    	
+	    	                    	this.ingresos = response;
+	    	                    	
+	    	                    } 
+
+	    	                }.bind(this));
+	      			  
+	      		  },
+    		 
+    		    cargar_modal_ingreso: function(categoria =null){
+	       			   
+     			   if(categoria != null){
+     				   
+     				   this.categoria = categoria;
+     				       				   
+     			   }else{
+     				   
+     				  this.categoria.id_categoria = 0;
+     				   
+     			   }
+     			   
+     			   console.log(this.categoria);
+     			   
+     			   this.categoria.categoria_tipo='Ingreso';
+     			   this.categoria.categoria_nombre = '';
+     			   
+     			   $('#ingresoModal').modal('show');
+     			   
+     		  
+     	  		},
+     	  		
+				crear_categoria: function (tipo) {
+					
+					var url = '';					
+					
+					if(this.categoria.categoria_nombre == ''){
+    		    		Swal.fire({
+    	                    icon: 'info',
+    	                    title: 'Oops...',
+    	                    text: 'Debe ingresar un nombre a la categoria',
+    	                    footer: ''
+    	                });
+    	                return;
+    		    	}
+					
+					
+					
+					if(tipo == 'ingreso'){
+						
+						this.categoria.categoria_tipo='Ingreso';
+	
+					} else if (tipo == 'egreso'){
+						
+						this.categoria.categoria_tipo='Egreso';
+						
+					}else{
+						
+
+	    		    		Swal.fire({
+	    	                    icon: 'info',
+	    	                    title: 'Uups...',
+	    	                    text: 'Al parecer a ocurrido un error, corre!!',
+	    	                    footer: ''
+	    	                });
+	    	                return;
+	    		    	
+					}
+					
+					
+					
+					if(this.categoria.id_categoria == 0){
+						
+    		    		url = 'create';
+    		    		
+    		    	}else if(this.categoria.id_categoria > 0){
+    		    		
+    		    		url = 'edit';
+    		    		
+    		    	}else{
+    		    		
+    		    		console.log(this.categoria.id_categoria);
+    		    		return;
+    		    	}
+					
+					fetch('Categoria', {
+    	            	method: 'POST', // or 'PUT'
+    	                body: JSON.stringify({'url': url, 'data' : this.categoria}), // data can be `string` or {object}!
+    	                headers: {
+    	                    'Content-Type': 'application/json'
+    	                }
+    	            }).then(res => res.json())
+    	                .catch(error => console.error('Error:', error))
+    	                .then(function (response) {
+    						
+    	                	
+    	                    if (response.estado == "success") {
+    	                    	
+    	                    	$('#ingresoModal').modal('hide');
+    	                    	$('#egresoModal').modal('hide');
+    	                    	
+    	                    	Swal.fire({
+    	                            icon: response.estado,
+    	                            title: 'Oops...',
+    	                            text: response.mensaje,
+    	                            footer: ''
+    	                        });
+    	                        
+    	                        
+    	                    } else {
+    	                    	
+    	                        Swal.fire({
+    	                            icon: response.estado,
+    	                            title: 'Oops...',
+    	                            text: response.mensaje,
+    	                            footer: ''
+    	                        });
+    	                        
+    	                    }
+    	                    
+    	                    app.get_ingresos();
+    	                    app.get_egresos();
+    	                    
+    	                }.bind(this));
+					
+
+    	            
+    		      
+    		    },
+    		 
+    		 // Final metodos para ingresos
+    		 
+    		 // metodos egresos
+    		 
+    		    get_egresos: function (){
+        			  
+	      			  var url = 'Categoria';
+	    	            
+	    	            fetch(url, {
+	    	            	method: 'POST', // or 'PUT'
+	    	                body: JSON.stringify({'url': "get_egreso"}), // data can be `string` or {object}!
+	    	                headers: {
+	    	                    'Content-Type': 'application/json'
+	    	                }
+	    	            }).then(res => res.json())
+	    	               .catch(error => console.error('Error:', error))
+	    	               .then(function (response) {
+	    	                	
+	    	                	console.log(response);
+	    						
+	    	                    if (response.data.length > 0) {
+	    	                    	 	                    	
+	    	                    	this.egresos = response;
+	    	                    	
+	    	                    } 
+
+	    	                }.bind(this));
+	      			  
+	      		  },
+    		 
+    		    cargar_modal_egreso: function(categoria= null){
+    		    	
+    		    	this.categoria.categoria_tipo='Egreso';
+    		    	this.categoria.categoria_nombre = '';
+	       			   
+      			   if(categoria != null){
+      				   
+      				   this.categoria = categoria;
+      				       				   
+      			   }else{
+      				   
+      				  this.categoria.id_categoria = 0;
+      				   
+      			   }
+      			   
+      			   console.log(this.categoria);
+      			   
+      			   $('#egresoModal').modal('show');
+      			   
+      		  
+      	  		},
+    		    
+      	  	//  final metodos egresos
+     	  		
+				
+    		    
+    		    
     		  }
     	})
     
     
     app.get_cuentas();
+    app.get_ingresos();
+    app.get_egresos();
     
     
     </script>

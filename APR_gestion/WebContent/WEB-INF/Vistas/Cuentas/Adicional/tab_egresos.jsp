@@ -5,7 +5,7 @@
 
   <div class="row m-l-none m-r-none " >
 
-    <div class="col-sm-2 col-md-2 btn btn-sm btn-danger" style="border : solid 1px #3e5468;Border-radius : 5px;margin : 5px;" data-toggle="modal" data-target="#egresoModal">
+    <div class="col-sm-2 col-md-2 btn btn-sm btn-danger" style="border : solid 1px #3e5468;Border-radius : 5px;margin : 5px;" @click="cargar_modal_egreso()">
        Nueva Categoria
    </div>
    
@@ -34,103 +34,24 @@
 	                            			</tr>
 	                            		</thead>
 	                            		<tbody>
-	                            			<tr>
+	                            			<tr v-for="item of egresos.data">
 	                            				<td>
-	                            					Sueldos
+	                            					{{item.categoria_nombre}}
 	                            				</td>
 	                            				<td>
-	                            					Activo
+	                            					{{item.categoria_estado}}
 	                            				</td>
 	                            				<td>
-	                            					01-07-2020
-	                            				</td>
-	                            				<td>
-	                            					Editar
-	                            				</td>
-	                            			</tr>
-	                            			<tr>
-	                            				<td>
-	                            					Insumos Basicos
-	                            				</td>
-	                            				<td>
-	                            					Activo
-	                            				</td>
-	                            				<td>
-	                            					01-07-2020
+	                            					{{item.categoria_fecha}}
 	                            				</td>
 	                            				<td>
 	                            					Editar
 	                            				</td>
-	                            			</tr>
-	                            			
-	                            			<tr>
-	                            				<td>
-	                            					Transporte
-	                            				</td>
-	                            				<td>
-	                            					Activo
-	                            				</td>
-	                            				<td>
-	                            					01-07-2020
-	                            				</td>
-	                            				<td>
-	                            					Editar
-	                            				</td>
-	                            			</tr>
-	                            			
-	                            			<tr>
-	                            				<td>
-	                            					Gastos Administrativos
-	                            				</td>
-	                            				<td>
-	                            					Activo
-	                            				</td>
-	                            				<td>
-	                            					01-07-2020
-	                            				</td>
-	                            				<td>
-	                            					Editar
-	                            				</td>
-	                            			</tr>
-	                            			
-	                            			<tr>
-	                            				<td>
-	                            					Gastos Operacionales
-	                            				</td>
-	                            				<td>
-	                            					Activo
-	                            				</td>
-	                            				<td>
-	                            					01-07-2020
-	                            				</td>
-	                            				<td>
-	                            					Editar
-	                            				</td>
-	                            			</tr>
-	                            			
+	                            			</tr>                            			
 	                            			
 	                            		</tbody>
 	                            	</table>
                             	</div>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
@@ -154,7 +75,7 @@
                   <div class="col-md-12" style="text-align: center;">
                       <h4>
                           <span style="text-align: center;">
-                            <b>Nueva Categoria Ingreso</b>
+                            <b>Nueva Categoria Egreso</b>
                           </span>
                       </h4>
                   </div>
@@ -162,16 +83,16 @@
                   <div class="col-md-6">
                        <div class="CRM-inputGroup CRM-m-t-20">
                           <label>Nombre Categoria: </label>
-                          <input type="text" class="form-group form-control ">
+                          <input type="text" class="form-group form-control " v-model="categoria.categoria_nombre">
                       </div>
                   </div>
                                    
                   <div class="col-md-6">
                        <div class="CRM-inputGroup CRM-m-t-20">
                           <label>Estado  : </label>
-                          <select class="form-group form-control ">
-                            <option value="A">Activo</option>
-                            <option value="I">Inactivo</option>
+                          <select class="form-group form-control " v-model="categoria.categoria_estado">
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
                           </select>
                       </div>
                   </div>       
@@ -185,7 +106,7 @@
           </div>
           <div class="modal-footer">          
             <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cancelar </button>
-            <button type="button" class="btn btn-primary"> Guardar </button>
+            <button type="button" class="btn btn-primary" @click="crear_categoria('egreso')"> Guardar </button>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@
 
   <div class="row m-l-none m-r-none " >
 
-    <div class="col-sm-2 col-md-2 btn btn-sm btn-success" style="border : solid 1px #3e5468;Border-radius : 5px;margin : 5px;" data-toggle="modal" data-target="#ingresoModal">
+    <div class="col-sm-2 col-md-2 btn btn-sm btn-success" style="border : solid 1px #3e5468;Border-radius : 5px;margin : 5px;" @click="cargar_modal_ingreso()">
        Nueva Categoria
    </div>
    
@@ -17,6 +17,7 @@
                             	</h4>
 	                            	<table class="table table-striped b-t b-light">
 	                            		<thead>
+	                            		
 	                            			<tr>
 	                            			 	<th>
 	                            			 	 Nombre
@@ -32,37 +33,24 @@
 	                            			 	</th>
 	                            			 	
 	                            			</tr>
+	                            			
 	                            		</thead>
 	                            		<tbody>
-	                            			<tr>
+	                            		
+	                            			<tr v-for="item of ingresos.data">
 	                            				<td>
-	                            					Ingreso Por Ventas
+	                            					{{item.categoria_nombre}}
 	                            				</td>
 	                            				<td>
-	                            					Activo
+	                            					{{item.categoria_estado}}
 	                            				</td>
 	                            				<td>
-	                            					01-07-2020
-	                            				</td>
-	                            				<td>
-	                            					Editar
-	                            				</td>
-	                            			</tr>
-	                            			<tr>
-	                            				<td>
-	                            					Ingreso Otros
-	                            				</td>
-	                            				<td>
-	                            					Activo
-	                            				</td>
-	                            				<td>
-	                            					01-07-2020
+	                            					{{item.categoria_fecha}}
 	                            				</td>
 	                            				<td>
 	                            					Editar
 	                            				</td>
-	                            			</tr>
-	                            			
+	                            			</tr>               			
 	                            			
 	                            		</tbody>
 	                            	</table>
@@ -117,16 +105,16 @@
                   <div class="col-md-6">
                        <div class="CRM-inputGroup CRM-m-t-20">
                           <label>Nombre Categoria: </label>
-                          <input type="text" class="form-group form-control ">
+                          <input type="text" class="form-group form-control" v-model="categoria.categoria_nombre">
                       </div>
                   </div>
                                    
                   <div class="col-md-6">
                        <div class="CRM-inputGroup CRM-m-t-20">
                           <label>Estado  : </label>
-                          <select class="form-group form-control ">
-                            <option value="A">Activo</option>
-                            <option value="I">Inactivo</option>
+                          <select class="form-group form-control" v-model="categoria.categoria_estado">
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
                           </select>
                       </div>
                   </div>       
@@ -140,7 +128,7 @@
           </div>
           <div class="modal-footer">          
             <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cancelar </button>
-            <button type="button" class="btn btn-primary"> Guardar </button>
+            <button type="button" class="btn btn-primary" @click="crear_categoria('ingreso')"> Guardar </button>
           </div>
         </div>
       </div>

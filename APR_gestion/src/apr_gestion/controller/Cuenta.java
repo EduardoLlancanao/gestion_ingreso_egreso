@@ -35,9 +35,30 @@ public class Cuenta extends HttpServlet {
 		// TODO Auto-generated method stub
 				// response.getWriter().append("Served at: ").append(request.getContextPath());
 				response.getWriter().append("Home Do get: ");
-				// Cambio a vista
-				RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/Vistas/Cuentas/Cuenta.jsp");
-				view.forward(request, response);
+				
+//				Session User
+				Usuario user = new Usuario();
+				HttpSession session = request.getSession();
+				
+				if(session.getAttribute("usu_id") != null) {
+					
+					int usu_id = Integer.parseInt(session.getAttribute("usu_id").toString());
+					user.setUsu_id(usu_id);
+						
+					// Cambio a vista
+					RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/Vistas/Cuentas/Cuenta.jsp");
+					view.forward(request, response);
+					
+				}else {
+					
+					RequestDispatcher view = request.getRequestDispatcher("/index.jsp");
+					view.forward(request, response);
+					
+					
+				}
+				
+				
+				
 	}
 
 	/**
@@ -197,28 +218,7 @@ public class Cuenta extends HttpServlet {
 	    		res.put("mensaje", "url no esta definida");
 	            out = response.getWriter();
 	    		out.print(res);
-			}
-			
-			
-			
-            
-//			CuentaMgrImpl mgr = new CuentaMgrImpl();
-//            
-//            String[] validarUser = new String[2];
-////            validarUser[0] = "estado";
-////            validarUser[1] = "Mensaje";
-//            
-//            validarUser = mgr.crear_cuenta(c);
-//            
-//          response.setContentType("application/json");
-//    		response.setHeader("Cache-Control", "nocache");
-//    		response.setCharacterEncoding("utf-8");
-//            	
-//    		res.put("estado", validarUser[0]);
-//    		res.put("mensaje", validarUser[1]);
-//            PrintWriter out = response.getWriter();
-//    		out.print(res);
-           
+			}         
                  
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block

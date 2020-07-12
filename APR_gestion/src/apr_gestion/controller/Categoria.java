@@ -4,10 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,15 +17,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import apr_gestion.implement.IngresoMgrImpl;
-import apr_gestion.objetos.Movimientos;
+import apr_gestion.implement.CategoriaMgrImpl;
 import apr_gestion.objetos.Usuario;
 
 /**
- * Servlet implementation class Ingreso
+ * Servlet implementation class Categoria
  */
-@WebServlet("/Ingreso")
-public class Ingreso extends HttpServlet {
+@WebServlet("/Categoria")
+public class Categoria extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -36,37 +32,14 @@ public class Ingreso extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.getWriter().append("Home Do get: ");
-		
-//		Session User
-		Usuario user = new Usuario();
-		HttpSession session = request.getSession();
-		
-		if(session.getAttribute("usu_id") != null) {
-			
-			int usu_id = Integer.parseInt(session.getAttribute("usu_id").toString());
-			user.setUsu_id(usu_id);
-				
-			// Cambio a vista
-			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/Vistas/Ingreso/Ingreso.jsp");
-			view.forward(request, response);
-			
-		}else {
-			
-			RequestDispatcher view = request.getRequestDispatcher("/index.jsp");
-			view.forward(request, response);
-			
-			
-		}
-
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 		
 		String json = "";
@@ -90,8 +63,7 @@ public class Ingreso extends HttpServlet {
 		user.setUsu_id(usu_id);
 
 //      Categoria
-		Movimientos mov = new Movimientos();
-		Categoria cat = new Categoria();
+		apr_gestion.objetos.Categoria cat = new apr_gestion.objetos.Categoria();
 		String[] json_res = new String[2];
 		
 		try {
@@ -102,7 +74,7 @@ public class Ingreso extends HttpServlet {
 //			obtener url para switch
 			String url = base.get("url").toString();
 						
-			IngresoMgrImpl mgr = new IngresoMgrImpl();
+			CategoriaMgrImpl mgr = new CategoriaMgrImpl();
 			PrintWriter out = null;
 			
 			if(url != "") {
@@ -113,31 +85,10 @@ public class Ingreso extends HttpServlet {
 						
 							data=(JSONObject) parser.parse(base.get("data").toString());
 							
-							mov.setId_cuenta(Integer.parseInt(data.get("id_cuenta").toString()));
-							mov.setId_categoria(Integer.parseInt(data.get("id_categoria").toString()));
-							mov.setMovi_tipo(data.get("movi_tipo").toString());
-							mov.setMovi_valor(Double.parseDouble(data.get("movi_valor").toString()));
-							mov.setMovi_observacion(data.get("movi_observacion").toString());
+							cat.setCategoria_nombre(data.get("categoria_nombre").toString());
+							cat.setCategoria_tipo(data.get("categoria_tipo").toString());
 							
-//							SimpleDateFormat formato = new SimpleDateFormat("YYYY-MM-dd");
-////							                                                2020-07-12 06:36:32
-//							Date fechaDate = null;
-//								
-//							try {
-//								
-//								fechaDate = formato.parse(data.get("movi_fecha").toString());
-//								
-//								
-//							} catch (java.text.ParseException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-							
-							mov.setMovi_fecha(data.get("movi_fecha").toString());
-							
-							System.out.println("mov Inicio :"+mov);
-							
-							json_res = mgr.crear_movimiento(mov, user);
+							json_res = mgr.crear_categoria(cat, user);
 							
 							response.setContentType("application/json");
 				    		response.setHeader("Cache-Control", "nocache");
@@ -177,37 +128,37 @@ public class Ingreso extends HttpServlet {
 					
 					case "get_ingreso":
 						
-//							JSONArray list_ingreso = new JSONArray();
-//																													
-//							list_ingreso = mgr.lista_categoria(user, "Ingreso");
-//													
-//							response.setContentType("application/json");
-//				    		response.setHeader("Cache-Control", "nocache");
-//				    		response.setCharacterEncoding("utf-8");
-//				    		
-//				    		long total_ingreso = list_ingreso.stream().count(); 
-//				            	
-//				    		res.put("count", total_ingreso);
-//				    		res.put("data", list_ingreso);
-//				            out = response.getWriter();
-//				    		out.print(res);
+							JSONArray list_ingreso = new JSONArray();
+																													
+							list_ingreso = mgr.lista_categoria(user, "Ingreso");
+													
+							response.setContentType("application/json");
+				    		response.setHeader("Cache-Control", "nocache");
+				    		response.setCharacterEncoding("utf-8");
+				    		
+				    		long total_ingreso = list_ingreso.stream().count(); 
+				            	
+				    		res.put("count", total_ingreso);
+				    		res.put("data", list_ingreso);
+				            out = response.getWriter();
+				    		out.print(res);
 
 						break;
 						
 					case "get_egreso":
 						
-//							list = mgr.lista_categoria(user, "Egreso");
-//													
-//							response.setContentType("application/json");
-//				    		response.setHeader("Cache-Control", "nocache");
-//				    		response.setCharacterEncoding("utf-8");
-//				    		
-//				    		long total_egreso = list.stream().count(); 
-//				            	
-//				    		res.put("count", total_egreso);
-//				    		res.put("data", list);
-//				            out = response.getWriter();
-//				    		out.print(res);
+							list = mgr.lista_categoria(user, "Egreso");
+													
+							response.setContentType("application/json");
+				    		response.setHeader("Cache-Control", "nocache");
+				    		response.setCharacterEncoding("utf-8");
+				    		
+				    		long total_egreso = list.stream().count(); 
+				            	
+				    		res.put("count", total_egreso);
+				    		res.put("data", list);
+				            out = response.getWriter();
+				    		out.print(res);
 
 					break;
 					
@@ -261,7 +212,9 @@ public class Ingreso extends HttpServlet {
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} 
+		}
+		
+		
 	}
 
 }
