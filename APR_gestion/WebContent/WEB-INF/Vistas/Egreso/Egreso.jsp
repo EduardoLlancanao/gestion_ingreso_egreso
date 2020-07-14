@@ -101,103 +101,33 @@
 		                            	<table class="table table-striped b-t b-light">
 		                            		<thead>
 		                            			<tr>
-		                            			 	<th>
-		                            			 	 Cuenta
-		                            			 	</th>
-		                            			 	<th>
-		                            			 	Fecha de Movimiento	                            			 	
-		                            			 	</th>	                            			 	
-		                            			 	<th>
-		                            			 	Monto	                            			 	
-		                            			 	</th>
+		                            			 	<th> Cuenta	</th>
+		                            			 	<th> Categoria </th>	                            			 	
+		                            			 	<th> Monto </th>
+		                            			 	<th> Observación </th>
+		                            			 	<th> Movimiento </th>
 		                            			</tr>
 		                            		</thead>
-		                            		<tbody>
-		                            			<tr>
-		                            				<td>
-		                            					Banco Santander
-		                            				</td>
-		                            				<td>
-		                            					2 Enero 2020
-		                            				</td>	                            				
-		                            				<td>
-		                            					$ 25.000
-		                            				</td>
-		                            			</tr>
-		                            			<tr>
-		                            				<td>
-		                            					Banco Estado
-		                            				</td>
-		                            				<td>
-		                            					5 Marzo 2020
-		                            				</td>
-		                            				
-		                            				<td>
-		                            					$ 150.000
-		                            				</td>
-		                            			</tr>
-		                            			<tr>
-		                            				<td>
-		                            					Banco Estado
-		                            				</td>
-		                            				<td>
-		                            					25 Abril 2020
-		                            				</td>
-		                            				
-		                            				<td>
-		                            					$ 350.000
-		                            				</td>
-		                            			</tr>
-		                            			<tr>
-		                            				<td>
-		                            					Banco Santander
-		                            				</td>
-		                            				<td>
-		                            					2 Octubre 2020
-		                            				</td>
-		                            				
-		                            				<td>
-		                            					$ 10.000
-		                            				</td>
-		                            			</tr>
-		                            			<tr>
-		                            				<td>
-		                            					Banco Santander
-		                            				</td>
-		                            				<td>
-		                            					13 Septiembre 2020
-		                            				</td>
-		                            				
-		                            				<td>
-		                            					$ 68.000
-		                            				</td>
-		                            			</tr>
-		                            			<tr>
-		                            				<td>
-		                            					Banco Santander
-		                            				</td>
-		                            				<td>
-		                            					5 Julio 2020
-		                            				</td>
-		                            				
-		                            				<td>
-		                            					$ 30.000
-		                            				</td>
-		                            			</tr>
-		                            			<tr>
-		                            				<td>
-		                            					Banco Estado
-		                            				</td>
-		                            				<td>
-		                            					27 Diciembre 2020
-		                            				</td>
-		                            				
-		                            				<td>
-		                            					$ 500.000
-		                            				</td>
-		                            			</tr>
-		                            			
+		                            		<tbody>		                            		
+		                            			<tr v-for="ingreso of listado_egresos.data">
+		                            				<td> <b>{{ingreso.cuenta_nombre}}</b>  </td>
+		                            				<td> <span class="label bg-dark">{{ingreso.categoria_nombre}}</span> <br> <span class="label bg-danger">{{ingreso.movi_tipo}}</span>  </td>	                            				
+		                            				<td style="color: red;"> - $ {{ingreso.movi_valor}} </td>
+		                            				<td> {{ingreso.movi_observacion}} </td>
+		                            				<td> <span class="label bg-info">{{ingreso.movi_fecha}}</span> <br> <span class="label bg-primary">{{ingreso.usuario}}</span> </td>
+		                            			</tr>		                            					                            			
 		                            		</tbody>
+		                            		<div class="text-center">
+								                    <ul class="pagination pagination">
+								                      <li v-if="listado_egresos.count >= filtro.limit"><a @click="pagination('menos',1)"><i class="fa fa-chevron-left"></i></a></li>
+								                      
+								                      <li v-for="(index, page) of getPaginas" ><a @click="pagination('pagina',index)">{{index}}</a></li>
+								                     
+								                      <li v-if="listado_egresos.count >= filtro.limit" ><a @click="pagination('mas',1)"><i class="fa fa-chevron-right"></i></a></li>
+								                    </ul>
+								                 </div>
+								                 </div>
+
 		                            	</table>
 	                            	</div>
                            		 </section>                                
@@ -222,7 +152,7 @@
     	  el: '#app',
     	  data: {
     	    user_cuentas:[],
-    	    ingresos:[],
+    	    listado_egresos:[],
     	    egresos:[],
     	    new_egreso:{
     	    	id_cuenta:0,
@@ -233,8 +163,51 @@
     	    	movi_observacion:'',
     	    	
     	    },
+    	    filtro:{
+    	    	limit:5,
+    	    	page:1,
+    	    	movi_tipo:'Egreso',
+    	    },
     	  },
     	  methods: {
+    		  
+ pagination: function (tipo, pagina){
+    			  
+    			  switch (tipo) {
+    			  
+					case "mas":
+							if(this.filtro.page == this.getPaginas){
+								break;
+							}
+						
+							this.filtro.page = this.filtro.page+1;
+							
+							app.get_listado_egresos();
+							
+						break;
+					case "menos":
+							if(this.filtro.page == 1){
+								break;
+							}
+							this.filtro.page = this.filtro.page-1;
+							
+							app.get_listado_egresos();
+						
+						break;
+					case "pagina":
+						
+							this.filtro.page = pagina;
+							
+							app.get_listado_egresos();
+						
+						break;
+	
+					default:
+						break;
+				}
+    			 
+    			  
+    		  },
     		  
     		  crear_movimiento: function () {
     		    	
@@ -316,7 +289,7 @@
     	                        
     	                    }
     	                    
-    	                    app.get_cuentas();
+    	                    app.get_listado_ingresos();
     	                    
     	                }.bind(this));
     		      
@@ -376,36 +349,59 @@
       			  
       		  },
       		  
-      		get_ingresos: function (){
-    			  
-    			  var url = 'Categoria';
-  	            
-  	            fetch(url, {
-  	            	method: 'POST', // or 'PUT'
-  	                body: JSON.stringify({'url': "get_ingreso"}), // data can be `string` or {object}!
-  	                headers: {
-  	                    'Content-Type': 'application/json'
-  	                }
-  	            }).then(res => res.json())
-  	               .catch(error => console.error('Error:', error))
-  	               .then(function (response) {
-  	                	
-  	                    if (response.data.length > 0) {
-  	                    	 	                    	
-  	                    	this.ingresos = response;
-  	                    	
-  	                    } 
+	      	get_listado_egresos: function (){
+	  			  
+	  			  var url = 'Egreso';
+		            
+		            fetch(url, {
+		            	method: 'POST', // or 'PUT'
+		                body: JSON.stringify({'url': "get_egreso", 'data' : this.filtro}), // data can be `string` or {object}!
+		                headers: {
+		                    'Content-Type': 'application/json'
+		                }
+		            }).then(res => res.json())
+		               .catch(error => console.error('Error:', error))
+		               .then(function (response) {
+		                	
+		                    if (response.data.length > 0) {
+		                    	 	                    	
+		                    	this.listado_egresos = response;
+		                    	
+		                    } 
+	
+		                }.bind(this));
+	  			  
+	  		  },
+    		  
+    		  
+    	  },
+    	  
+    	  computed: {
 
-  	                }.bind(this));
-    			  
-    		  },
-    		  
-    		  
-    	  }
+  	        getPaginas: function () {
+  	        	
+  	        	let total = 0;
+  	        	
+  	        	if(this.listado_egresos.count == 0){
+  	        		
+  	        		return total;
+  	        		
+  	        	}else if(this.listado_egresos.count > 0 && this.listado_egresos.count < this.filtro.limit){
+  	        		total = 1;
+  	        	}else{
+  	        		
+  	        		total = Math.ceil(this.listado_egresos.count/this.filtro.limit);
+  	        		
+  	        	}
+  	        	
+  	            return total;
+  	        },
+
+  	    },
     })
     
     app.get_cuentas();
-    app.get_ingresos();
+    app.get_listado_egresos();
     app.get_egresos();
     
     </script>

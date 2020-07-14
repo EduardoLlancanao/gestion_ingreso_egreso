@@ -119,6 +119,22 @@ BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStr
 						break;
 						
 					case "get_egreso":
+						
+						JSONArray[] list_ingreso = new JSONArray[2];
+						data=(JSONObject) parser.parse(base.get("data").toString());
+//													
+						list_ingreso = mgr.lista_ingresos(user, data, "Egreso");
+						int x = mgr.lista_ingresos_count(user, data, "Egreso");
+																			
+						response.setContentType("application/json");
+			    		response.setHeader("Cache-Control", "nocache");
+			    		response.setCharacterEncoding("utf-8");
+			    						    						    					    						            	
+
+			    		res.put("data", list_ingreso[0]);
+			    		res.put("count", x);
+			            out = response.getWriter();
+			    		out.print(res);
 
 					break;
 					

@@ -1,5 +1,12 @@
 package apr_gestion.implement;
 
+import java.sql.Array;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import com.apr_gestion.model.MovimientosDAOImpl;
 
 import apr_gestion.objetos.Movimientos;
@@ -52,6 +59,30 @@ public class IngresoMgrImpl implements IngresoMgr {
 		}
 		
 		return mensajes;
+	}
+
+	@Override
+	public JSONArray[] lista_ingresos(Usuario user, JSONObject data, String tipo) {
+						
+		MovimientosDAOImpl movImpl = new MovimientosDAOImpl();
+		
+		JSONArray[] listado = new JSONArray[2];
+		
+		listado[0] = movImpl.listado_movimientos(user, data, tipo);
+				
+		return listado;
+		
+		
+	}
+
+	@Override
+	public int lista_ingresos_count(Usuario user, JSONObject data, String tipo) {
+		
+		MovimientosDAOImpl movImpl = new MovimientosDAOImpl();
+		
+		int x = movImpl.listado_movimientos_count(user, data, tipo);
+		
+		return x;
 	}
 
 }

@@ -118,25 +118,9 @@ public class Ingreso extends HttpServlet {
 							mov.setMovi_tipo(data.get("movi_tipo").toString());
 							mov.setMovi_valor(Double.parseDouble(data.get("movi_valor").toString()));
 							mov.setMovi_observacion(data.get("movi_observacion").toString());
-							
-//							SimpleDateFormat formato = new SimpleDateFormat("YYYY-MM-dd");
-////							                                                2020-07-12 06:36:32
-//							Date fechaDate = null;
-//								
-//							try {
-//								
-//								fechaDate = formato.parse(data.get("movi_fecha").toString());
-//								
-//								
-//							} catch (java.text.ParseException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-							
+														
 							mov.setMovi_fecha(data.get("movi_fecha").toString());
-							
-							System.out.println("mov Inicio :"+mov);
-							
+														
 							json_res = mgr.crear_movimiento(mov, user);
 							
 							response.setContentType("application/json");
@@ -177,20 +161,21 @@ public class Ingreso extends HttpServlet {
 					
 					case "get_ingreso":
 						
-//							JSONArray list_ingreso = new JSONArray();
-//																													
-//							list_ingreso = mgr.lista_categoria(user, "Ingreso");
-//													
-//							response.setContentType("application/json");
-//				    		response.setHeader("Cache-Control", "nocache");
-//				    		response.setCharacterEncoding("utf-8");
-//				    		
-//				    		long total_ingreso = list_ingreso.stream().count(); 
-//				            	
-//				    		res.put("count", total_ingreso);
-//				    		res.put("data", list_ingreso);
-//				            out = response.getWriter();
-//				    		out.print(res);
+							JSONArray[] list_ingreso = new JSONArray[2];
+							data=(JSONObject) parser.parse(base.get("data").toString());
+														
+							list_ingreso = mgr.lista_ingresos(user, data, "Ingreso");
+							int x = mgr.lista_ingresos_count(user, data, "Ingreso");
+																				
+							response.setContentType("application/json");
+				    		response.setHeader("Cache-Control", "nocache");
+				    		response.setCharacterEncoding("utf-8");
+				    						    						    					    						            	
+
+				    		res.put("data", list_ingreso[0]);
+				    		res.put("count", x);
+				            out = response.getWriter();
+				    		out.print(res);
 
 						break;
 						
