@@ -85,4 +85,16 @@ public class IngresoMgrImpl implements IngresoMgr {
 		return x;
 	}
 
+	@Override
+	public JSONArray[] get_kpi_home(Usuario user, JSONObject data, String tipo) {
+		
+		MovimientosDAOImpl movImpl = new MovimientosDAOImpl();
+		
+		JSONArray[] listado = new JSONArray[2];
+		
+		listado[0] = movImpl.get_kpi_home(user, data, tipo);
+				
+		return listado;
+	}
+
 }
