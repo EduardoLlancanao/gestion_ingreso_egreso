@@ -9,6 +9,10 @@ public class Conector {
 	private String sServidor = "45.7.228.154";
 	private String sUsuario = "external_user";
 	private String sPassword = "external_user123";
+	
+//	private String sServidor = "localhost";
+//	private String sUsuario = "root";
+//	private String sPassword = "";
 	private String iPuerto = "3306";
 	private String sServer = "";
 	private String sBaseDatos = "BD_ingreso_egreso";

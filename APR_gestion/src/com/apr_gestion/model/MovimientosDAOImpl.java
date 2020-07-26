@@ -382,4 +382,69 @@ public class MovimientosDAOImpl implements MovimientosDAO{
 		}
 	}
 
+	@Override
+	public JSONArray get_indicadores(Usuario user, String dias) {
+		
+		JSONArray listado = null;
+	
+		
+		String sql = "CALL INDICADORES("+dias+")";
+				
+//		System.out.println("InOut : "+sql);
+		
+		try {
+			
+			con = basedato.datos("BD_ingreso_egreso");
+			stmt= con.createStatement();
+			resul = stmt.executeQuery(sql);
+						
+			listado = new JSONArray();
+			
+				while(resul.next()) {
+									
+//					System.out.println("Esta es weta : "+resul.getString("cuenta_nombre"));
+					JSONObject res= new JSONObject();														
+					
+					res.put("fecha" , resul.getString("fecha") );
+					res.put("totalIngresos" , resul.getString("totalIngresos") );
+					res.put("totalEgresos" , resul.getString("totalEgresos") );
+					res.put("Total" , resul.getString("Total") );
+					res.put("Totalacumulativo" , resul.getString("Totalacumulativo") );
+					
+					res.put("TotalValorAcumulativo" , resul.getString("TotalValorAcumulativo") );
+					res.put("TotalValor" , resul.getString("TotalValor") );
+					res.put("valorIngresos" , resul.getString("valorIngresos") );
+					res.put("valorEgresos" , resul.getString("valorEgresos") );
+					
+					listado.add(res);
+					
+				}
+				
+				return listado;
+			
+						
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+			
+		} finally {
+			//cerramos las conexiones 
+			try {
+				if(resul != null ) {
+					resul.close();
+				}
+				if(stmt != null ) {
+					stmt.close();
+				}
+				if(con != null ) {
+					con.close();
+				}
+			} catch (Exception e2) {
+				System.out.println("Error al cerrar la conexiones ");
+			}
+		}
+		
+		
+	}
+
 }

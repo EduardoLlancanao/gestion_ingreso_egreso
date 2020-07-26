@@ -4,7 +4,7 @@
 
 <section class="Col-md-12">
 
-	<div class="col-sm-1 col-md-1 padder-v" style="border : solid 1px #3e5468;Border-radius : 5px;margin : 5px;cursor:pointer;" @click="cargar_modal_cuenta">
+	<div class="col-sm-1 col-md-1 padder-v" style="border : solid 1px #3e5468;Border-radius : 5px;margin : 5px;cursor:pointer;" @click="cargar_modal_cuenta(null)">
        <div style="margin: 0px;padding: 0px;margin-top: -10px;cursor:pointer;">
 	       <span class="fa-stack fa-2x pull-left m-r-sm">
 	         <i class="fa fa-circle fa-stack-2x text-info"></i>

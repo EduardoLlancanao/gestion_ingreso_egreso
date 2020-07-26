@@ -209,7 +209,7 @@
     				   
     			   }
     			   
-    			   console.log(this.new_cuenta);
+    			   console.log(cuenta);
     			   
     			   $('#exampleModal').modal('show');
     			   

@@ -97,4 +97,16 @@ public class IngresoMgrImpl implements IngresoMgr {
 		return listado;
 	}
 
+	@Override
+	public JSONArray get_indicadores(Usuario user, String dias) {
+		
+		MovimientosDAOImpl movImpl = new MovimientosDAOImpl();
+		
+		JSONArray listado = new JSONArray();
+		
+		listado = movImpl.get_indicadores(user, dias);
+		
+		return listado;
+	}
+
 }

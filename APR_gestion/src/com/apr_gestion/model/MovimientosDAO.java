@@ -16,6 +16,8 @@ public interface MovimientosDAO {
 	
 	public JSONArray listado_movimientos(Usuario user, JSONObject data, String tipo);
 	
+	public JSONArray get_indicadores(Usuario user, String tipo);
+	
 	public JSONArray get_kpi_home(Usuario user, JSONObject data, String tipo);
 	
 	public int listado_movimientos_count(Usuario user, JSONObject data, String tipo);

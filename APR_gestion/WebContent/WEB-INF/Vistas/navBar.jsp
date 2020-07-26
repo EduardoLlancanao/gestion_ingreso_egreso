@@ -97,7 +97,7 @@
 	                             </li>
 	                             
 	                             <li>
-	                                 <a href="Home">
+	                                 <a href="Informes">
 	                                     <i class="fa fa-angle-right"></i>
 	                                     <span>Ver Informes</span>
 	                                 </a>
