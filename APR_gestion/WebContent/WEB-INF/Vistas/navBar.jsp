@@ -119,14 +119,14 @@
 	                         </a>
 	                         <ul class="nav lt">
 	                             <li>
-	                                 <a href="Home">
+	                                 <a href="Usuario?u=perfil">
 	                                     <i class="fa fa-angle-right"></i>
 	                                     <span>Mi Perfil</span>
 	                                 </a>
 	                             </li>
 	                             
 	                             <li>
-	                                 <a href="Home">
+	                                 <a href="Usuario?u=usuarios">
 	                                     <i class="fa fa-angle-right"></i>
 	                                     <span>Usuarios</span>
 	                                 </a>

@@ -1,5 +1,7 @@
 package apr_gestion.implement;
 
+import org.json.simple.JSONArray;
+
 import com.apr_gestion.model.UsuarioDAOImpl;
 
 import apr_gestion.objetos.Usuario;
@@ -48,6 +50,42 @@ public class UsuarioMgrImpl implements UsuarioMgr {
 			
 		return usuario;
 		
+	}
+
+
+	@Override
+	public JSONArray get_by_id(Usuario user) {
+		
+		UsuarioDAOImpl userDao = new UsuarioDAOImpl();
+//		Usuario usuario = null;
+		
+		JSONArray usuario = null;
+				
+		usuario = userDao.user_get_by_id(user);
+			
+		return usuario;
+	}
+
+
+	@Override
+	public JSONArray get_usuarios(Usuario user) {
+		
+		UsuarioDAOImpl userDao = new UsuarioDAOImpl();
+		
+		JSONArray usuario = null;
+				
+		usuario = userDao.user_get_usuarios(user);
+			
+		return usuario;
+	}
+	
+	public int get_usuarios_count(Usuario user) {
+		
+		UsuarioDAOImpl userDao = new UsuarioDAOImpl();
+		
+		int usuario = userDao.user_get_usuarios_count(user);
+			
+		return usuario;
 	}
 
 }
